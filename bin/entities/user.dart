@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_getters_setters
+
 import 'package:uuid/uuid.dart';
 import 'message.dart';
 import '../database/db.dart' as db;

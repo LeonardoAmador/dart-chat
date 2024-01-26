@@ -1,5 +1,4 @@
 import '../entities/user.dart';
-import '../handlers/auth_exceptions.dart';
 class AuthService {
   Future<void> authenticate(User user) async {
     try {
@@ -8,11 +7,9 @@ class AuthService {
 
       if (await _isAuthenticated(user)) {
         print('User ${user.uid} is already authenticated!');
+        return;
       } else {
         await _changeAuthenticationStatus(user);
-        if (!await _isAuthenticated(user)) {
-          throw AuthenticationException('Authentication failed for user ${user.uid}.');
-        }
       }
 
       print('User ${user.uid} authenticated successfully!');
