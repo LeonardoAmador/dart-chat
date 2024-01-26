@@ -58,6 +58,7 @@ class Chat {
   }
 
   bool _isPartingWords(String message) {
-    return Message.partingWords.contains(message.toLowerCase());
+    return Message.partingWords
+        .any((partingWord) => message.toLowerCase().contains(partingWord.toLowerCase()));
   }
 }

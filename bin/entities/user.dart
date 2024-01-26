@@ -11,6 +11,7 @@ class User {
   final List<Message> messagesSent = [];
 
   User({ required String name }) : _uid = Uuid().v4(), _name = name {
+    _validateName(name);
     db.users.add(this);
   }
 
@@ -24,5 +25,9 @@ class User {
   bool get isAuthenticated => _isAuthenticated;
   set isAuthenticated(bool value) {
     _isAuthenticated = value;
+  }
+
+  void _validateName(String name) {
+    if (name.trim().isEmpty) throw ArgumentError('User name cannot be null or empty.');
   }
 }
