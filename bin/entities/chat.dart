@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:io';
+import '../auth/auth_service.dart';
 import 'message.dart';
 import 'user.dart';
-
 class Chat {
   late final User user1;
   late final User user2;
+  final AuthService authService = AuthService();
 
   Chat({required String name1, required String name2}) {
     user1 = User(name: name1);
@@ -13,6 +14,8 @@ class Chat {
   }
 
   Future<void> startChat() async {
+    await _authenticateUsers();
+
     print('Chat started between ${user1.name} and ${user2.name}.\n');
 
     while (true) {
@@ -29,6 +32,16 @@ class Chat {
         print('${user2.name} has left the chat.');
         break;
       }
+    }
+  }
+
+  Future<void> _authenticateUsers() async {
+    try {
+      await authService.authenticate(user1);
+      await authService.authenticate(user2);
+    } catch (e) {
+      print('Error during authentication: $e');
+      rethrow;
     }
   }
 
